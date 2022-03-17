@@ -25,7 +25,7 @@ class DetailsActivity : AppCompatActivity() {
         movie?.run {
             titleText.text = title
             releaseText.text = release_date.take(4)
-            overviewText.text = "Overview: $overview"
+            overviewText.text = String.format(getString(R.string.overview), overview)
             Glide.with(this@DetailsActivity)
                 .load("$IMAGE_URL$poster_path")
                 .placeholder(R.mipmap.ic_launcher)
