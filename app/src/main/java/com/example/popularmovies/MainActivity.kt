@@ -33,14 +33,7 @@ class MainActivity : AppCompatActivity() {
         } ).get(MovieViewModel::class.java)
 
         movieViewModel.popularMovies.observe(this, { popularMovies ->
-            movieAdapter.addMovies(popularMovies
-                .filter {
-                    it.release_date.startsWith(
-                        Calendar.getInstance().get(Calendar.YEAR).toString()
-                    )
-                }
-                .sortedBy { it.title }
-            )
+            movieAdapter.addMovies(popularMovies)
         })
         movieViewModel.getError().observe(this,{ error ->
             Toast.makeText(this, error, Toast.LENGTH_LONG).show()
