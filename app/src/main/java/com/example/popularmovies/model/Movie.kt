@@ -1,9 +1,11 @@
 package com.example.popularmovies.model
 
 import android.os.Parcelable
+import androidx.room.Entity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+@Entity(tableName = "movies", primaryKeys = [("id")])
 data class Movie(
     val adult: Boolean = false,
     val backdrop_path: String = "",
