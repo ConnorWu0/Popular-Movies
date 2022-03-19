@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.popularmovies.databinding.ActivityDetailsBinding
 import com.example.popularmovies.model.Movie
 
 class DetailsActivity : AppCompatActivity() {
@@ -12,25 +13,22 @@ class DetailsActivity : AppCompatActivity() {
         const val EXTRA_MOVIE = "movie"
         const val IMAGE_URL = "https://image.tmdb.org/t/p/w185/"
     }
+    private lateinit var binding: ActivityDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_details)
-
-        val titleText: TextView = findViewById(R.id.title_text)
-        val releaseText: TextView = findViewById(R.id.release_text)
-        val overviewText: TextView = findViewById(R.id.overview_text)
-        val poster: ImageView = findViewById(R.id.movie_poster)
+        binding = ActivityDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val movie = intent.getParcelableExtra<Movie>(EXTRA_MOVIE)
         movie?.run {
-            titleText.text = title
-            releaseText.text = release_date.take(4)
-            overviewText.text = String.format(getString(R.string.overview), overview)
+            binding.titleText.text = title
+            binding.releaseText.text = release_date.take(4)
+            binding.overviewText.text = String.format(getString(R.string.overview), overview)
             Glide.with(this@DetailsActivity)
                 .load("$IMAGE_URL$poster_path")
                 .placeholder(R.mipmap.ic_launcher)
                 .fitCenter()
-                .into(poster)
+                .into(binding.moviePoster)
         }
     }
 }

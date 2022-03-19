@@ -7,10 +7,13 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.popularmovies.databinding.ActivityMainBinding
 import com.example.popularmovies.model.Movie
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     private val movieAdapter by lazy {
         MovieAdapter(object : MovieAdapter.MovieClickListener{
             override fun onMovieClick(movie: Movie) {
@@ -20,10 +23,11 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val recyclerView: RecyclerView = findViewById(R.id.movie_list)
-        recyclerView.adapter = movieAdapter
+
+        binding.movieList.adapter = movieAdapter
 
         val movieRepository = (application as MovieApplication).movieRepository
         val movieViewModel = ViewModelProvider(this, object: ViewModelProvider.Factory{
