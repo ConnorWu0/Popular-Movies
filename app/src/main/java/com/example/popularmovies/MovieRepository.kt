@@ -26,11 +26,21 @@ private val movieDatabase: MovieDatabase) {
                 val popularMovies = movieService.getPopularMovies(apiKey)
                 moviesFetched = popularMovies.results
                 movieDao.addMovies(moviesFetched)
-                //movieLiveData.postValue(popularMovies.results)
             } catch (exception: Exception) {
                 errorLiveData.postValue("An error occurred: ${exception.message}")
             }
         }
         movieLiveData.postValue(moviesFetched)
+    }
+
+    suspend fun fetchMoviesFromNetwork(){
+        val movieDao: MovieDao = movieDatabase.movieDao()
+        try {
+            val popularMovies = movieService.getPopularMovies(apiKey)
+            val moviesFetched = popularMovies.results
+            movieDao.addMovies(moviesFetched)
+        }catch (exception: Exception){
+            errorLiveData.postValue("An error occurred: ${exception.message}")
+        }
     }
 }
